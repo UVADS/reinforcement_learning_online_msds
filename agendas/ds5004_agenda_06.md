@@ -12,7 +12,9 @@ Due Friday June 26, 2026 at 11:59pm ET
 - Quiz 3: TD learning, Q-learning
 - Lab 3: Cliff Walk
 
-
+Due Friday July 10, 2026 at 11:59pm ET
+- Quiz 4: Deep Q-Networks and Extensions 1
+- Journaling: Modules 1-6 completed
 
 ---
 
