@@ -26,6 +26,6 @@ Due Friday July 10, 2026 at 11:59pm ET
 
 - Discuss paper: Playing Atari with Deep Reinforcement Learning
 
-- [time permitting] Review notebook: deep_q_networks.ipynb
+- Review notebook: deep_q_networks.ipynb
 
 
