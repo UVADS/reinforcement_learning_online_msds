@@ -12,8 +12,9 @@
 
 ### Upcoming Deliverables, Due July 31 at 11:59pm ET.
 
-Quiz 7: Model-Based RL and Model Safety
-Journaling: Modules 1-10 completed
+- Quiz 7: Model-Based RL and Model Safety
+- Journaling: Modules 1-10 completed
+
 ---
 
 ### Content
