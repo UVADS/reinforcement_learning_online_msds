@@ -24,3 +24,4 @@
   - PPO
   - DDPG from Policy Gradient Extensions
 
+- Model-Based RL
