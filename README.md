@@ -10,5 +10,5 @@ To start learning quickly, you'll probably find it easiest to run the Jupyter no
 If you use these course materials in teaching, research, or derivative works,
 please cite:
 
-Adam Smith. Introduction to Data Science.
-GitHub repository. https://github.com/yourusername/yourrepo
+Adam Tashman. Reinforcement Learning.
+GitHub repository. https://github.com/UVADS/reinforcement_learning_online_msds
