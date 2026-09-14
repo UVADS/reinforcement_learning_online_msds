@@ -13,7 +13,7 @@ Each entry should answer these questions:
 Constructive feedback is also fine (e.g., Exercise X, Part Y wasn't clear) but negative criticism should be avoided.
 
 Each entry should:
-- Use full sentences to show good writing and clear thought process
+- Use full sentences to show good writing and clear thought processes
 - Be limited to one or two paragraphs (it should be fairly brief)
 
 File format: Use a Word doc or similar. Recycle the same file throughout the course.
