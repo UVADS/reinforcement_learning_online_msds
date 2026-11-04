@@ -7,6 +7,10 @@
 - Quiz 7: Model-Based RL and Model Safety
 - Journaling: Modules 1-10 completed
 
+### Upcoming Deliverables, Due TBD
+
+- Lab: Reinforcement Learning with Human Feedback (RLHF)
+
 ## Deliverables due Wednesday, August 5th at 11:59pm ET:
 
 Final Project: Presentation
@@ -22,4 +26,4 @@ Final Project: Paper
 
 1. Review RLHF slides  
 2. Review wrap and resources slides
-3. Work on `rlhf_lab.ipynb`
+3. Work on `rlhf_lab.ipynb` (graded, 10 points)
