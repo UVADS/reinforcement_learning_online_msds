@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"  # weekly, to catch upstream package breakage
+
+jobs:
+  lint-and-spell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: make tools
+      - run: make lint
+      - run: make spell
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python-version: "3.12"  # Google Colab runtime
+            experimental: false
+          - python-version: "3.14"  # current stable
+            experimental: true
+          - python-version: "3.15"  # upcoming
+            experimental: true
+    continue-on-error: ${{ matrix.experimental }}
+    name: test (python ${{ matrix.python-version }})
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - run: make update
+      - run: make test

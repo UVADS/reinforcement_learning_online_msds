@@ -1,3 +1,7 @@
 *soln*
 *checkpoint*
 *.ipynb_checkpoints*
+env/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
