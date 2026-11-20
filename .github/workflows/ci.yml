@@ -44,3 +44,18 @@ jobs:
           cache-dependency-path: requirements*.txt
       - run: make update
       - run: make test
+
+  # Installs only what the lab notebooks' `! pip install` cells install (not requirements.txt),
+  # then runs the renderlab/CartPole tests. Goes red if the notebooks' installs stop working,
+  # even while the requirements.txt-based `test` job stays green.
+  notebook-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"  # Google Colab runtime
+      - run: pip install pytest nbformat
+      - run: pip install pygame opencv-python-headless  # preinstalled on Colab, which the notebooks assume
+      - run: python tests/install_like_notebooks.py
+      - run: pytest -vv tests -k "renderlab or cartpole"

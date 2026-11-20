@@ -32,14 +32,25 @@ def test_cartpole_runs():
     env.close()
 
 
-def test_renderlab_wraps_cartpole(tmp_path):
+def test_renderlab_records_and_plays_cartpole(tmp_path, monkeypatch):
+    """Mirrors lab_cart_pole1: record an episode, then play() it.
+
+    play() is where renderlab uses moviepy (re-encode with ffmpeg) and IPython (display),
+    so this catches runtime breaks in those packages, not just import errors.
+    """
     import gymnasium as gym
     import renderlab
 
-    env = renderlab.RenderFrame(gym.make("CartPole-v1", render_mode="rgb_array"), str(tmp_path))
+    monkeypatch.chdir(tmp_path)  # play() writes a temp file into the working directory
+    env = renderlab.RenderFrame(gym.make("CartPole-v1", render_mode="rgb_array"), "./output")
     env.reset(seed=0)
-    env.step(env.action_space.sample())
+    while True:  # CartPole-v1 terminates or truncates (at 500 steps); auto_release closes the video
+        _, _, terminated, truncated, _ = env.step(env.action_space.sample())
+        if terminated or truncated:
+            break
+    env.play()
     env.close()
+    assert any((tmp_path / "output").glob("*.mp4"))
 
 
 @pytest.mark.parametrize("path", NOTEBOOKS, ids=lambda p: str(p.relative_to(ROOT)))
