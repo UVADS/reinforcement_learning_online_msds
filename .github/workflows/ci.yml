@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"  # weekly, to catch upstream package breakage
+
+jobs:
+  lint-and-spell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: make tools
+      - run: make lint
+      - run: make spell
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python-version: "3.12"  # Google Colab runtime
+            experimental: false
+          - python-version: "3.14"  # current stable
+            experimental: true
+          - python-version: "3.15"  # upcoming
+            experimental: true
+    continue-on-error: ${{ matrix.experimental }}
+    name: test (python ${{ matrix.python-version }})
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - run: make update
+      - run: make test
+
+  # Installs only what the lab notebooks' `! pip install` cells install (not requirements.txt),
+  # then runs the renderlab/CartPole tests. Goes red if the notebooks' installs stop working,
+  # even while the requirements.txt-based `test` job stays green.
+  notebook-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"  # Google Colab runtime
+      - run: pip install pytest nbformat
+      - run: pip install pygame opencv-python-headless  # preinstalled on Colab, which the notebooks assume
+      - run: python tests/install_like_notebooks.py
+      - run: pytest -vv tests -k "renderlab or cartpole"
