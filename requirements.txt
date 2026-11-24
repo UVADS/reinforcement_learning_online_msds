@@ -1,0 +1,16 @@
+# Packages imported by the course notebooks (see tests/test_environment.py).
+# CPU-only torch wheels keep CI installs small; Colab ships its own GPU build.
+--extra-index-url https://download.pytorch.org/whl/cpu
+numpy
+pandas
+scipy
+matplotlib
+gymnasium[classic-control]
+renderlab
+# renderlab (last released 2023) uses these without declaring them, and breaks on newer majors
+ipython<9  # IPython 9 removed IPython.core.display.display
+moviepy<2  # moviepy 2 removed moviepy.editor
+opencv-python-headless
+torch
+tensorflow
+keras

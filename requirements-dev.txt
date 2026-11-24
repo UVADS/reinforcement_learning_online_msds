@@ -1,0 +1,5 @@
+# Tooling for `make lint`, `make spell`, `make test`
+pytest
+nbformat
+ruff
+codespell
